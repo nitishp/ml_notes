@@ -19,3 +19,20 @@
     - You're given a set of data and just told "Hey find some structure out of this"
     - Most commonly its a clustering algorithm (group things into buckets)
     - But could also be anomaly detection or dimensionality reduction
+
+- Linear Regression 
+    - Notations
+        - Training set = the "right answers" in the  data set that you train a supervised algorithm on
+        - x = input / feature variable
+        - y = output
+        - m = # of examples in training set
+        - (x <sup>(i)</sup>, y<sup>(i)</sup>) refers to the i<sup>th</sup> example
+        - *f* is the model or function that your machine learning algorithm produces to predict future values
+        - $\hat{y}$ is the estimated / predicted value from the function *f*
+        - J(w,b) is the cost function that we compute <- want to minimize this
+    - Linear regression function: *f(x)* = wx + b
+        - w and b are parameters that are tweaked
+    - Cost function: $$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \tag{1}$$ 
+        - You can plot J as a function of w and b and then pick the options for w and b that minimize the cost function
+        - For w and b you can make a contour plot or a 3D plot to visualize the cost function
+
