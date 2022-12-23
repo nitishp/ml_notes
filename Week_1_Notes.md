@@ -36,3 +36,21 @@
         - You can plot J as a function of w and b and then pick the options for w and b that minimize the cost function
         - For w and b you can make a contour plot or a 3D plot to visualize the cost function
 
+- Gradient descent
+    - Algorithm to help minimize cost function
+    - Intuitive explanation: At each iteration, you take a baby step in the direction with the steepest descent
+    - Algorithm:
+        - Do the following until convergence (i.e. values don't change):
+        - Simultaneously update w and b:
+            - $$tmp_w = w - \alpha * \frac{d *J(w, b)}{dw}$$
+            - $$tmp_b = b - \alpha * \frac{d *J(w, b)}{db}$$
+            - $$w = tmp_w$$
+            - $$b = tmp_b$$
+    - Reminder: Derivative of a function at a certain point is the slope at that point
+    - $\alpha$ controls the learning rate
+        - Too high and you might not converge
+        - Too low and it might never converge
+    - Gradient descent can get stuck at local minimas
+        - Squared error cost function doesn't have this issue
+        - Gradient descent also slows down as it approaches the optimal solution
+
