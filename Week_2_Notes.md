@@ -8,15 +8,15 @@
 
 - Gradient descent still works the same, the only difference is in the derivative term
 
-$$\begin{align*} \text{repeat}&\text{ until convergence:} \; \lbrace \newline\;
-& w_j = w_j -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial w_j} \tag{5}  \; & \text{for j = 0..n-1}\newline
+$$\begin{align*} \text{repeat}&\text{ until convergence:} \; \lbrace \newline
+& w_j = w_j -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial w_j} & \text{for j = 0..n-1}\newline
 &b\ \ = b -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial b}  \newline \rbrace
 \end{align*}$$
 
 $$
 \begin{align}
-\frac{\partial J(\mathbf{w},b)}{\partial w_j}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})x_{j}^{(i)} \tag{6}  \\
-\frac{\partial J(\mathbf{w},b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)}) \tag{7}
+\frac{\partial J(\mathbf{w},b)}{\partial w_j}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})x_{j}^{(i)}  \\
+\frac{\partial J(\mathbf{w},b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})
 \end{align}
 $$
 
@@ -42,4 +42,3 @@ $$
     - This can also be used for polynomial regression like so:
     $$f(x) = w_1 * x_1 + w_2*(x_1)^2 + b$$
     - When feature engineering, feature scaling becomes even more important
-
