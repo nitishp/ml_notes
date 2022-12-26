@@ -23,3 +23,36 @@ Classification
     - Note that $z$ doesn't need to be a linear function, it could be a complex nonlinear function like this
       $$ z = w_1x_1 + w_2x_2x_1 + w_3x_2^2 + b $$
     - This can help create complex non-linear functions like circles or ellipses
+
+- Cost function
+  - The mean squared error cost function won't work because it's not a convex function for our logistic regression f(x)
+  - Instead let's use a different cost function like this:
+    - $$loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) = (-y^{(i)} \log\left(f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) - \left( 1 - y^{(i)}\right) \log \left( 1 - f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right)$$
+    - It looks complicated, but recall that $y^{(i)}$ can only be 0 or 1
+      - In the case that $y^{(i)} = 1$:
+        - If the prediction $f_{w,b}(x^{(i)}) \rightarrow 1$, the $Loss() \rightarrow 0$ which makes sense since the prediction is accurate
+        - If the prediction $f_{w,b}(x^{(i)}) \rightarrow 0$, the $Loss() \rightarrow \infty$ which makes sense since the prediction is completely wrong
+      - In the case that $y^{(i)} = 0$:
+        - If the prediction $f_{w,b}(x^{(i)}) \rightarrow 0$, the $Loss() \rightarrow 0$ which makes sense since the prediction is accurate
+        - If the prediction $f_{w,b}(x^{(i)}) \rightarrow 1$, the $Loss() \rightarrow \infty$ which makes sense since the prediction is completely wrong
+    - Recall that the cost function is just the sum of all of the Loss functions
+      - $$J_{w,b}(f(x)) = \frac{1}{m}\sum_{j=1}^{m} Loss(f_{w,b}(x^{(i)}, y^{(i)})) $$
+
+- Gradient descent
+  - Same concepts still apply actually, the derivatives even **look** the same:
+
+$$\begin{align*} \text{repeat}&\text{ until convergence:} \; \lbrace \newline
+& w_j = w_j -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial w_j} & \text{for j = 0..n-1}\newline
+&b\ \ = b -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial b}  \newline \rbrace
+\end{align*}$$
+
+
+$$
+\begin{align}
+\frac{\partial J(\mathbf{w},b)}{\partial w_j}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})x_{j}^{(i)}  \\
+\frac{\partial J(\mathbf{w},b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})
+\end{align}
+$$
+
+  - Note though that it is different because the the $f_{w,b}(x^{(i)})$ is different and it's a sigmoid function instead
+  - All the usual stuff about feature scaling still applies!
