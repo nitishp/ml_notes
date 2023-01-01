@@ -1,0 +1,21 @@
+# Week 2
+
+- Tensorflow
+  - Use previous week's code to setup model
+  - Call `model.compile(loss=BinaryCrossEntropy())`
+    - BinaryCrossEntropy() is the same loss function as the logistic regression loss function
+  - Call `model.fit(X,Y,epoch=<some_num>)`
+    - Epochs control how many runs of gradient descent
+    - This `fit` function even takes care of the complicated work of computing backpropogation or computing the partial derivates properly for the gradient descent update step
+- Activation functions
+  - Don't just have to be sigmoid, can also be:
+    - ReLU: $g(z) = max(0, z)$
+    - Linear: $g(z) = z$
+  - In practice
+    - Hidden layers: Almost always use ReLU
+      - This makes gradient descent a bit faster in practice because the derivative term doesn't have multiple flat spots
+      - **Don't** use linear because then it just results in linear regression everywhere
+        - Linear algebra rule that a "linear function of a linear function is still a linear function"
+    - Output layer:
+      - Use sigmoid for binary classification
+      - Use linear for regression
