@@ -19,3 +19,30 @@
     - Output layer:
       - Use sigmoid for binary classification
       - Use linear for regression
+- Multi-class classification
+  - Use softmax regression
+    - Extension of logistic regression
+    - Computation:
+      - $$ z_j = w_j \cdot x_j $$
+      - $$ a_j = P(y=j | x) = \frac {e^{z_j}} {\sum_{k=1}^{N} e^{z_k}}
+      - Notice that computing $a_j$ is a function of all the other $z$ values. This is different when compared to sigmoid activations
+    - Cost function
+      - Loss is a piecewise function
+        - $ Loss = -log(a_j)$ if $y = j$
+      - Cost is an average of the loss over all the training examples
+    - In tensorflow code:
+      ```
+      model = Sequential([
+        Dense(units=2, activation='relu'),
+        Dense(units=4, activation='relu'),
+        Dense(units=3, activation='linear'),
+      ])
+      model.compile(loss=SparseCategoricalCrossEntropy(from_logits=True))
+      model.fit(X_train, y)
+      z_out = model.predict(X_new)
+      a_out = tf.nn.softmax(z_out) // Need to call activation since it's missing
+      ```
+      - Use `from_logits` for greater numerical precision (it just moves some numbers around)
+- Multi-label classification
+  - Each example can have one or more labels. For example, a picture can have both a pedestrian and a car in it
+  - You can just do this in the final output layer by having sigmoid activation functions for each of the neurons
