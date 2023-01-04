@@ -43,6 +43,20 @@
       a_out = tf.nn.softmax(z_out) // Need to call activation since it's missing
       ```
       - Use `from_logits` for greater numerical precision (it just moves some numbers around)
+      - You can always inspect individual layer weights and plot them to get a more intuitive sense of what each layer is doing
 - Multi-label classification
   - Each example can have one or more labels. For example, a picture can have both a pedestrian and a car in it
   - You can just do this in the final output layer by having sigmoid activation functions for each of the neurons
+
+- Adam algorithm
+  - An alternative to gradient descent
+  - The intuition behind this is that it's possible to dynamically adapt $\alpha$ based on the trajectory gradient descent is taking
+    - If its heading in the same direction constantly, speed it up (increase $\alpha$)
+    - If not, lower $\alpha$
+
+- Convolutional neural networks
+  - In contrast to the Dense neural networks, this neuron won't take in all of the previous inputs
+  - If we had $x_1...x_{100}$ for example, we could have the first neuron take in $x_1...x_{20}$ and the second neuron take in $x_{11}...x_{30}$
+  - Intuition:
+    - You might want to do this to reduce the number of training examples needed
+    - It also converges faster than a dense neural network
