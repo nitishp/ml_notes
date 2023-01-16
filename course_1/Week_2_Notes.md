@@ -32,7 +32,7 @@ $$
             - Divide by the largest value
     - You have to normalize the values of any new inputs that you want to predict
 
-- Gradient descent cost should increase on every iteration of the algorithm
+- Gradient descent cost should decrease on every iteration of the algorithm
     - If it goes up the learning rate is too large
 - Try running gradient descent for a small number of iterations first, find out the highest rate for which the cost keeps going down and then pick that as the learning rate
 
