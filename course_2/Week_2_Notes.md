@@ -60,3 +60,24 @@
   - Intuition:
     - You might want to do this to reduce the number of training examples needed
     - It also converges faster than a dense neural network
+
+- Derivatives
+  - An easy way to think about it is if you increase the value of the input by a tiny amount  $\epsilon$, how much will the output change by
+
+  $$
+    \text{if } w \uparrow \epsilon \text{ causes } J(w) \uparrow \text{ by } k \times e
+  $$
+
+  $$
+    \text{then } \frac{\partial J(w)}{\partial w} = k
+  $$
+
+- Back Propogation
+  - Create a computation graph which has a bunch of intermediary steps to compute the cost function
+    - Work left-to-right to compute the cost
+    - Work right-to-left to compute the derivatives
+  ![backprop_computation_slide.png](./backprop_computation_slide.png)
+  - Computing this takes linear time (N + P) for a graph that has N nodes and P parameters. Nodes are the boxes and P are $w$ and $b$
+
+
+
