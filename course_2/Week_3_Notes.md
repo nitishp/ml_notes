@@ -60,3 +60,26 @@
             ])
             ```
             - The 0.01 here is the $\lambda$
+- Iterative loop of ML
+    - Choose model and how to represent data. In the case of e-mail spam classification, it could be something like the count of certain word that shows up
+    - Train the model
+    - Run diagnostics (bias, variance, error analysis)
+        - Error analysis: Take a manual look through errors / misclassifications in the cross validation set. See if you can find any patterns. Use this as inspiration for tuning your model. Continuing with the case of e-mail spam classifications, you might decide focusing on pharma words could be fruitful since a lot of those were misclassified
+    - Repeat
+- Adding more data
+    - You can use error analysis to manually decide what sections of data would be helpful for adding more datapoints
+    - You can augment existing data to create more datapoints. This can look like adding background noise to audio clips or rotating images
+    - You can synthetically create new datapoints. This could be like in the OCR example, where you take screenshots of your editor with different fonts
+    - When adding more data, make sure it's representative of what you'd see in the test set or the real world
+- Transfer learning
+    - Intuitive understanding
+        - A lot of large neural nets break down the problem in a much more basic sense at the beginning input layers. At these layers, they're learning things like edges or corners. 
+        - This is helpful for detecting cats and dogs, but it's also helpful for detecting numbers for example. So the hope is that a lot of things can carry over.
+    - How to do it
+        - Take a large neural net with the same input type and use the same parameters
+        - Replace the final output layer with the output layer that you want and retrain the model using your own training set
+            - You can just train the final layer or retrain all the other parameters but using the existing model as a starting point
+- Deploying ML algorithm
+    - Depending on the # of users, you'll need to handle scaling, efficiency, logging (you can get more data to retrain), model updates etc.
+    - For things like search new terms come up all the time so needing to retrain is quite common
+- 
