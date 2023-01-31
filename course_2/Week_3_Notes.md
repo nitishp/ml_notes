@@ -82,4 +82,18 @@
 - Deploying ML algorithm
     - Depending on the # of users, you'll need to handle scaling, efficiency, logging (you can get more data to retrain), model updates etc.
     - For things like search new terms come up all the time so needing to retrain is quite common
-- 
+- Skewed dataset
+    - Confusion matrix
+        - True positive: Both prediction and actual equal 1
+        - True negative: Both prediction and actual equal 0
+        - False positive: Prediction = 1 and actual = 0
+        - False negative: Prediction = 0 and actual = 1
+    - Precision: True positive / # of predicted positive
+    - Recall: True positive / # of actual positive
+    - Ideally we want both precision and recall to be high
+    - Tradeoff
+        - In a classification algorithm we pick a threshold
+        - If we raise the threshold, we increase precision but decrease recall
+        - If we lower the threshold, we increase recall but decrease precision
+        - F1 score is an alternate way of viewing precision and recall combined. It biases towards the lower of the two. 
+            - You generally want to pick the algorithm with the higher F1 score
