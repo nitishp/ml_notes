@@ -41,3 +41,8 @@
         - i.e. if $weight \leq threshold $
         - You'll need to try multiple thresholds, pick the one that gives the highest information gain
         - Then compare to all the other features as before
+
+- Regression Trees
+    - Works very similarly to decision trees
+    - Only difference is instead of calculating entropy of a set, we calculate variance (statistical term)
+    - Choose the feature to split on that results in the highest variance reduction
