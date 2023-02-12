@@ -46,3 +46,10 @@
     - Works very similarly to decision trees
     - Only difference is instead of calculating entropy of a set, we calculate variance (statistical term)
     - Choose the feature to split on that results in the highest variance reduction
+    - Final leaf node can be a mean of all the items in the final node
+
+- Tree Ensembles
+    - Key idea: Have multiple decision trees. Each one votes and the majority vote is what is the final prediction
+        - You don't want to rely on just a single decision tree since a single decision tree can vary wildly based on examples in the dataset (and slight deviations compound because of the recursive nature of the algorithm)
+    - Use sampling with replacement to create multiple training sets that you can use to train each decision tree
+    - 
