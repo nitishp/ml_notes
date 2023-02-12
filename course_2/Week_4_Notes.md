@@ -51,5 +51,19 @@
 - Tree Ensembles
     - Key idea: Have multiple decision trees. Each one votes and the majority vote is what is the final prediction
         - You don't want to rely on just a single decision tree since a single decision tree can vary wildly based on examples in the dataset (and slight deviations compound because of the recursive nature of the algorithm)
-    - Use sampling with replacement to create multiple training sets that you can use to train each decision tree
-    - 
+    - Random forest algorithm
+        - Use sampling with replacement to create multiple training sets that you can use to train each decision tree
+        - Also at each node, in order to increase randomness, if there are $n$ features available, only allow the algorithm to pick one of $k < n$ features
+            - Typically, if $n > 100$, then $k = \sqrt{n}$ is a good guiding number
+    - Boosted decision tree
+        - Still creating a set of decision trees
+        - Instead of using random sampling with replacement, you increase the probability of picking training examples (from the original training set, not the modified one used to train the tree) that were classified incorrectly
+
+- Decision Trees vs Neural Networks
+    - Decision Trees
+        - Works well for tabular data
+        - Fast to train
+    - Neural Networks
+        - Works well for both tabular and unstructured (images / audio / text) data
+        - Slower to train
+        - Can use "transfer learning" -> using pretrained neural nets and making some small tweaks to it
