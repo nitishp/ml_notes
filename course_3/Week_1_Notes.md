@@ -25,3 +25,18 @@
     - How to pick the right $k$
         - A lot of times, it really is ambiguous
         - A common approach is to look at the downstream results of picking this value of $k$ (does it lead to less cost overall in your application for example)
+
+## Anomaly Detection
+- Used to detect unusual (anomalous) events
+- Rough idea: You compute the probability ($p$) of an event like the new event $x_{test}$ happening. If $p(x_{test}) < \epsilon$, then you've detected an unusual event
+- Gaussian distribution
+    - $$
+        p(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{\frac{-(x - \mu)^2}{2\sigma^2}}
+      $$
+    - To compute mean and standard deviation
+        - $$
+            \mu = \frac{1}{m} \sum \limits_{i=0}^{m} x^{(i)}
+            $$
+        - $$
+            \sigma^2 = \frac{1}{m} \sum \limits_{i=0}^{m} (x^{(i)} - \mu)^2
+          $$
