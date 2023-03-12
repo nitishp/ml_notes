@@ -47,7 +47,7 @@
         $$
 - Anomaly detection in practice
     - You can use previous data to tune your anomaly detection algorithm
-    - If you have 10,000 parameters, split it into 6k training set (which is just all the normal / unanomalous events), 2k cross validation set (used to tune $\epsilon$), 2k test set (used for reporting errors)
+    - If you have 10,000 examples, split it into 6k training set (which is just all the normal / unanomalous events), 2k cross validation set (used to tune $\epsilon$), 2k test set (used for reporting errors)
 - Anomaly detection vs supervised learning
     - When to pick anomaly detection 
         - If the number of anomalies in your training set is really small (0-20)
