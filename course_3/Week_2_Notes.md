@@ -66,3 +66,36 @@
         $$
             J(w,b,x) = \sum_{(i,j):r(i,j)=1} L(f_{(w,b,x)}(x), y^{(i,j)})
         $$
+- Mean normalization
+    - Useful for cases of new users
+        - By default, we'd just predict 0 for all movies which isn't too helpful
+    - The intuition is that we'll calculate the mean rating ($\mu_i$) for each movie and adjust the prediction like so:
+        $$
+            f(x) = w^{(j)} \cdot x^{(i)} + b^{(j)} + \mu_i
+        $$
+        $$
+            y^{(i,j)} = y^{(i,j)} - \mu_i
+        $$
+    - And the rest of the cost function remains the same
+    - So in effect we'll end up predicting the mean rating for each movie for a brand new user
+- Tensorflow can figure out how to calculate partial derivatives for you
+    ```
+    w = tf.Variable(3.0)
+
+    with tf.GradientTape() as tape:
+        fwb = w*x + b # Tell tape how to caclculate f(x)
+        costJ = (fwb - y) ** 2 # Tell tape how to calculate J
+    
+    [djDw] = tape.gradient(costJ, [w])
+    w.assign_add(-alpha * djDw) # Add learning rate * partial to w
+
+    ```
+- Finding similar items
+    - We can use the hidden features that are calculated in collaborative filtering to find this
+    - Find the $k$ which minimizes this equation (here $x^{i}$ is the movie you care about):
+        $$
+            \sum_{l=1}^n (x_l^{(k)} - x_l^{(i)})^2
+        $$
+- Collaborative filtering drawbacks
+    - Doesn't give an easy way to use side information (genre, demographics)
+    - Suffers from a cold start problem (how do I score a new movie for example)
