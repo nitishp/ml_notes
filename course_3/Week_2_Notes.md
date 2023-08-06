@@ -163,3 +163,24 @@ model.compile(optimizer=opt,
 model.fit([user_train[:, u_s:], item_train[:, i_s:]], y_train, epochs=30)
 model.evaluate([user_test[:, u_s:], item_test[:, i_s:]], y_test)
 ```
+
+## Principal Component Analysis
+- Algorithm to reduce dimensionality of data to easily visualize it
+    - Creates a derived axis to help still keep the dimensionality low
+    - Project each point onto this new axis and get the new value
+    - New axis is called "principal component" that leads to max variance in the data
+    - Each principal component is perpendicular to the original axis
+- Implementation details
+    - Run feature scaling and mean normalization for features
+    - To project:
+        - Take original coordinates and dot product it with the unit vector in the direction
+        - "Reconstruction" is not exact, but can be used to approximate the dimensions
+            - Take value and multiply it by the unit vector of the principal component axis
+- Code
+```
+pca_1 = PCA(n_components=1) # num dimension
+pca_1.fix(X)
+pca_1.explained_variance_ratio_ # Variance difference between applying and not applying PCA
+X_trans_1 = pca_1.transform(X)
+```
+
