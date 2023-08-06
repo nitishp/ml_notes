@@ -35,7 +35,7 @@
         $$
     - We can actually create a combined cost function since both of these equations are summing over all pairs of (movie, user) ratings where $r(i,j) = 1$
     $$
-        J(w,x,b) = \frac{1}{2} \sum_{(i,j):r(i,j) = 1} w^{(j)} \cdot (x^{(i)} + b^{(j)} - y^{(i,j)}) ^ 2 + \frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(w_k^{(j)})^2 + \frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(i)})^2
+        J(w,x,b) = \frac{1}{2} \sum_{(i,j):r(i,j) = 1} (w^{(j)} \cdot x^{(i)} + b^{(j)} - y^{(i,j)}) ^ 2 + \frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(w_k^{(j)})^2 + \frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(i)})^2
     $$
 
     - For minimizing the cost function, we can run gradient descent with partial derivities again:
@@ -99,3 +99,67 @@
 - Collaborative filtering drawbacks
     - Doesn't give an easy way to use side information (genre, demographics)
     - Suffers from a cold start problem (how do I score a new movie for example)
+
+## Content-based filtering
+- Takes features of movies $x_m$ and features of users $x_u$ and tries to use similarities to predict ratings of movies for a user
+    - This is different than collaborative filtering where it uses the ratings users gave movies to try and figure out what you'd rate a movie
+    - Collaborative filtering just needs user behavior data (what did the user rate movie $i$)
+        - Content based filtering needs data about both item and user features
+- Note that the dimensions of $x_m$ and $x_u$ could be very different. But we want to compute the dot product of two vectors $v_m^{(i)}$ for movie $i$ and $v_u^{(j)}$ for user $j$. These two dimensions should match. 
+- Making $v_m$ and $v_u$ is actually just two neural networks
+    - Input to $v_m$ network is $x_m$, and input to $v_u$ is $x_u$
+    - The dot product of $v_m$ and $v_u$ is taken to get the prediction
+- Cost function
+    $$
+        J = \sum_{(i,j):r(i,j)=1} (v_m^{(i)} \cdot v_u^{(j)} - y^{(i, j)})^2 + \text{NN regularization term}
+    $$
+- Scaling
+    - The inference of the neural network can take a while
+    - Lets break this down a bit into two steps
+        - Retrieval: Get items that you want to score (not the entire catalog). Can be based on similarity scores to last 10 songs/movies listened to
+        - Ranking: Run inference and compute predictions for all the items retrieved. Show the highest ones
+- Code for combining the two networks
+```
+num_outputs = 32
+tf.random.set_seed(1)
+user_NN = tf.keras.models.Sequential([
+    ### START CODE HERE ###     
+    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(num_outputs)  
+    ### END CODE HERE ###  
+])
+
+item_NN = tf.keras.models.Sequential([
+    ### START CODE HERE ###     
+    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(num_outputs)
+    ### END CODE HERE ###  
+])
+
+# create the user input and point to the base network
+input_user = tf.keras.layers.Input(shape=(num_user_features))
+vu = user_NN(input_user)
+vu = tf.linalg.l2_normalize(vu, axis=1)
+
+# create the item input and point to the base network
+input_item = tf.keras.layers.Input(shape=(num_item_features))
+vm = item_NN(input_item)
+vm = tf.linalg.l2_normalize(vm, axis=1)
+
+# compute the dot product of the two vectors vu and vm
+output = tf.keras.layers.Dot(axes=1)([vu, vm])
+
+# specify the inputs and output of the model
+model = tf.keras.Model([input_user, input_item], output)
+
+model.summary()
+
+cost_fn = tf.keras.losses.MeanSquaredError()
+opt = keras.optimizers.Adam(learning_rate=0.01)
+model.compile(optimizer=opt,
+              loss=cost_fn)
+model.fit([user_train[:, u_s:], item_train[:, i_s:]], y_train, epochs=30)
+model.evaluate([user_test[:, u_s:], item_test[:, i_s:]], y_test)
+```
