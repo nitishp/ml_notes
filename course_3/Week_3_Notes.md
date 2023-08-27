@@ -55,4 +55,26 @@
             - Train $Q_{new}$ such that $Q_{new}(s,a) = y$
         - Set $Q = Q_{new}$
     - The intuition here is that as $Q$ neural network model will get better over time and you repeat these steps more and more since we have accurate estimates for the $R(s)$
+    - Neural network architecture
+        - X is [s a]
+        - 2 hidden layers 
+        - 1 final neuron in the output layer for Y
+        - Optimized architecture
+            - The problem with the proposed architecture is that you have to run inference 4 times
+            - So lets make the output layer 4 neurons, one for each action
+                - Question: But how does this work since you don't specify actions to each layer? It could say assign each of the 4 neurons the left action
+                   - You don't! It's just an estimate (like the whole neural network)
+    - Choosing actions while still learning (Epsilon greedy policy)
+        - With some probability $1 - \epsilon$ pick the action $a$ that maximized $Q(s,a)$, otherwise pick a random action
+            - Helps avoid local maxima
+    - Additional optimizations
+        - Mini-batches
+            - Useful when the training set is very very large
+            - Main idea: Instead of using all the training set, for each iteration of gradient descent use $m'$ as a subset of the training set $m$ so each iteration of gradient descent can run quicker
+            - Will tend towards the minimum (but not as reliably as regular gradient descent)
+        - Soft updates
+            - $Q = Q_{new}$ might be too abrupt of a change and maybe a new one
+            - Main idea, use the weights from $Q_{new}$ but multiply it by a small number so you can get it to slowly move towards $Q_{new}$
+                - $w = 0.01*w_{new} + 0.99*w$
+            
  
