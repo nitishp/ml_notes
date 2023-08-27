@@ -8,9 +8,51 @@
     - $a$ action taken from this state
     - $R(s)$ is the reward from the state
     - $S'$ is the new state
+    - $a'$ new action taken in $s'$
     - $Return$ = Sum of the rewards at each step = $R_1 + \gamma R_2 + \gamma^2 R_3$
     - $\gamma$ is the discount factor. Used to incentivize getting to good rewards quickly
     - $\pi$ is the policy that is used to describe what action to take based on the current state
 - The return is what you use to determine which action to take. So we want to make sure that the policy tells us to take the right action to maximize the return
 - Markov Decision Process (MDP) - formalism of reinforcement learning algorithm
     - Future only depends on the current state. Doesn't matter how you get there
+
+## State action value function
+- $Q^* = Q(s,a)$ = Return if you
+    - Start in state $s$
+    - Take action $a$ (once)
+    - Behave optimally after that
+- The best possible return from state $s$ is $max_a Q(s,a)$
+- Bellman equation
+    - $Q(s,a) = R(s) + \gamma * max_{a'}Q(s', a')$
+    - Same as the intuitive description above
+- Random (stochastic) environment
+    - Random chance of going in a different state than you intended
+    - Try to maximize the Expected Return to account for random environment
+    - $Q(s,a) = R(s) + \gamma * E[max_{a'}Q(s', a')]$
+
+## Continuous State Spaces
+- The state space could be continuous, and most often is
+    - Can also be a vector (indicating many different features)
+- Lunar lander problem
+    - Learn policy $\pi$ that give the state space s
+        - $ s = [x, y, \dot{x}, \dot{y}, \theta, \dot{\theta}, l, r]$
+        - Finds optimal action $a$ to take
+- Train a neural network to compute $Q(s,a)$
+    - Use neural network to compute Q(s, nothing), Q(s, left), Q(s, right), Q(s, main)
+    - Input X to neural network is concat [s, a]
+    - Output Y is Q(s,a)
+- To get training data
+    - Take a bunch of random actions from states, this gives you X
+    - This also gives you the R(s) and the new $s'$. This is enough to compute Y since you have just a finite set of actions that you can take
+- DQN (Deep Q Neural network)
+    - Initialize neural network to randomly take a guess for weights to just guess $Q(s,a)$
+    - Repeat
+        - Take actions in the lunar lander, and store 10k pairs of $(s, a, R(s), s')$
+        - Train neural network
+            - Create new training set with 
+                - X = [s a]
+                - Y = $R(s) + \gamma * max_{a'} Q(s',a')$
+            - Train $Q_{new}$ such that $Q_{new}(s,a) = y$
+        - Set $Q = Q_{new}$
+    - The intuition here is that as $Q$ neural network model will get better over time and you repeat these steps more and more since we have accurate estimates for the $R(s)$
+ 
