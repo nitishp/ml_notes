@@ -48,6 +48,7 @@
     - Initialize neural network to randomly take a guess for weights to just guess $Q(s,a)$
     - Repeat
         - Take actions in the lunar lander, and store 10k pairs of $(s, a, R(s), s')$
+            - This is called experience replay. We take random samples of this 10k to train our neural net since using sequential examples is too tightly related to be a good training set
         - Train neural network
             - Create new training set with 
                 - X = [s a]
@@ -76,5 +77,6 @@
             - $Q = Q_{new}$ might be too abrupt of a change and maybe a new one
             - Main idea, use the weights from $Q_{new}$ but multiply it by a small number so you can get it to slowly move towards $Q_{new}$
                 - $w = 0.01*w_{new} + 0.99*w$
+                - To clarify, these are two separate neural networks, that have the same shape. It's similar to gradient descent where it updates at once at the end
             
  
