@@ -41,6 +41,56 @@ dw_2 /= m
 db /= m
 ```
 ## Vectorization 
+
 * Really useful in deep learning because of very large datasets. Can get about a 300x speed increase
     * This is independent of using a GPU
     * Try avoid using explicit for loops in code
+
+* Vectorized implementation of a single iteration of gradient descent
+```
+Z = np.matmul(w.T, X) + b
+A = sigmoid(Z)
+dZ = A - Y
+dw = (1/m) * np.matmul(X, dZ.T)
+db = (1 / m) * np.sum(dZ)
+```
+* Broadcasting
+    * Numpy takes a number / vector and copies it along an axis
+    * Example:
+    ```
+    [[1 2 3],
+     [4 5 6]]
+
+     +
+
+    [100 200 300]
+
+    = 
+
+    [[1 2 3],
+     [4 5 6]]
+    
+    +
+
+    [[100 200 300],
+    [100 200 300]]
+
+    = 
+
+    [[101 202 303],
+    [104 205 306]]
+    ```
+* Numpy caveats
+    * Example:
+        * When you do a 1D vector in Numpy, the Transpose doesn't make sense
+        * Example
+        ```
+        a = np.random.randn(5)
+        print (a.shape)
+        # Output (5,)
+
+        print (a.T.shape)
+        # Output (5,)
+
+        ## NOTE This is not the same as a (5,1) or (1,5) and don't behave the same way
+        ```
