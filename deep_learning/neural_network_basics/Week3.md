@@ -48,3 +48,24 @@ Working across multiple examples:
 * We can calculate the activation of layer l as $A^{[l]} = \sigma{(W^{[l]} X + b^{[l]})}$
   * This will output $A^{[l]}$ as a $(n_h, m)$ matrix where $n_h$ represents the number of hidden units
   * You can generalize $X$ to be $A^{[l - 1]}$ since $X = A^{[0]}$
+
+Activation functions
+  * Sigmoid: Useful for 0 or 1 classification in the output layer
+  * Tanh: Similar to sigmoid, but ranges between -1 and 1
+  * ReLU: Formula is $max(0, z)$ and is commonly used in the activation function of hidden layers
+
+Why use non-linear activation functions
+* So you can use a linear activation function in the output layer if your problem has a continuous space of values
+* But in general, the composition of two linear functions is just a linear function. Consider the following:
+
+$$
+a^{[1]} = z^{[1]} = W^{[1]}X + b^{[1]}
+$$
+
+$$
+a^{[2]} = z^{[2]} = W^{[2]}a^{[1]} + b^{[2]}
+$$
+
+$$
+a^{[2]} = W^{[2]}W^{[1]}X + W^{[2]}b^{[1]} + b^{[2]} = W'X + b'
+$$
