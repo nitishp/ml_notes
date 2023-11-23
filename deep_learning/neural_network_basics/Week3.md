@@ -69,3 +69,14 @@ $$
 $$
 a^{[2]} = W^{[2]}W^{[1]}X + W^{[2]}b^{[1]} + b^{[2]} = W'X + b'
 $$
+
+Backpropogation intuition
+
+![Backprop diagram](./backprop.png)
+
+Random Initialization
+* What happens if you intialize all of $W$ to be 0?
+  * It ends up that all of the individual hidden units end up computing similar $W$ values and they all end up behaving similarly
+  * To offset this, randomly initialize them to small values
+* Why do you initialize to small values
+  * If you're using functions like sigmoid or tanh, initializing to small values helps the algorithm converge faster
