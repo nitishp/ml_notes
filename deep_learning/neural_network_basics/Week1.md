@@ -6,7 +6,7 @@
         * Linear
         * Sigmoid
         * ReLU
-    * They can feed into one another, but they're really unlabeled
+    * They can feed into one another, but you never train individual neurons to learn a specific thing
         * So they infer the middle/hidden "features" automatically
 * Has provided a lot of value in supervised learning in particular
     * Different problems have different neural network architectures

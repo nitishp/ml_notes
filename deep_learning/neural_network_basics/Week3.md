@@ -3,6 +3,7 @@
 * Notation
   * $W^{[1]}$ and $W^{[2]}$ refer to the weights of the network at layer 1 and layer 2
   * $a^{[l]}_{i}$ represents the i-th element in the activation of layer l
+  * $W_i^{[l]}$ represents the weights for the i-th element in layer l
   * Input layer: Inputs to the network
   * Final layer / output layer: Responsible for generating output $\hat{y}$
   * Middle layers are called hidden layers

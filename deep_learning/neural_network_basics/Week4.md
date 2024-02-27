@@ -3,6 +3,11 @@
 * Notation
   * $L$ = number of layers in the neural network
   * $n^{[l]}$ is the number of units in layer $l$
+  * $A^{[l]}$ is the activation output for layer $l$ for each example stacked horizontally
+    * So it looks like:
+    $$
+    [A^{[l](1)}, A^{[l](2)}, A^{[l](3)} ...A^{[l](m)}]
+    $$
 
 * General rule for activations for layer $l$
 $$
@@ -14,7 +19,7 @@ $$
 
 * Pro Tip: Make sure matrix dimensions make sense to avoid bugs
   * Dimensions of $W^{[l]}$ have to be $(n^{[l]}, n^{[l - 1]})$
-  * Dimensions of $b^{[l]}$ have to be $(n^{[l]}), 1)$
+  * Dimensions of $b^{[l]}$ have to be $(n^{[l]}, 1)$
     * Broadcasting will help take care of working across multiple examples
 
 * What's the intuition behind deep neural networks working better?

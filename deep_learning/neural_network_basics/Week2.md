@@ -51,7 +51,7 @@ db /= m
 Z = np.matmul(w.T, X) + b
 A = sigmoid(Z)
 dZ = A - Y
-dw = (1/m) * np.matmul(X, dZ.T)
+dw = (1 / m) * np.matmul(X, dZ.T)
 db = (1 / m) * np.sum(dZ)
 ```
 * Broadcasting
