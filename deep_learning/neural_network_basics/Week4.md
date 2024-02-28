@@ -23,14 +23,14 @@ $$
     * Broadcasting will help take care of working across multiple examples
 
 * What's the intuition behind deep neural networks working better?
-  * Each hidden layer computes a simple function and passes that info on
+  * Early hidden layer computes a simple function and passes that info on
     * You learn more complex things the deeper you go into neural networks
-  * To compute complicated things in a neural network, you'll also need to compute a shallow network with a ton of neurons per each layer
+  * To compute complicated things in a neural network, you'll also need to compute a shallow network with an exponentially large number of neurons per each layer
 
 * How does backprop work with multiple layers?
 ![forward and backprop layers](./forward_prop_and_backprop.png)
   * Notice that values for $z^{[l]}$ are cached so they can be used in backprop
-  * To compute the initial $da^{[l]}$
+  * To compute the initial $da^{[l]}$, it's based on the Loss function
   $$
   da^{[l]} = \frac{\partial{L(\hat{y}, y)}}{\partial{a^{[l]}}}
   $$
