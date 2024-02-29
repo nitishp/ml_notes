@@ -30,7 +30,21 @@ $$
 * How does backprop work with multiple layers?
 ![forward and backprop layers](./forward_prop_and_backprop.png)
   * Notice that values for $z^{[l]}$ are cached so they can be used in backprop
-  * To compute the initial $da^{[l]}$, it's based on the Loss function
+  * To compute the initial $da^{[L]}$, for the last layer it's based on the Loss function
   $$
-  da^{[l]} = \frac{\partial{L(\hat{y}, y)}}{\partial{a^{[l]}}}
+  da^{[L]} = \frac{\partial{L(\hat{y}, y)}}{\partial{\hat{y}}} = -\frac{y}{a} + \frac{1 - y}{1 - a}
   $$
+
+  $$
+  a = \hat{y}
+  $$
+
+* Hyperparameters
+  * Set of parameters used in the learning algorithm to learn the real parameters ($W$ and $b$)
+  * Examples:
+    * Learning rate $\alpha$
+    * Number of iterations of gradient descent
+    * Number of hidden layers $L$
+    * Number of hidden units in each layer
+  * Tweaking this is an experimental process. It's often something you just need to try out and see what works.
+  
