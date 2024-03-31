@@ -53,5 +53,24 @@ Notice that this leads to the same equation as before but you're subtracting the
 * Intuition
   * If we want to minimize the cost function, and we set $\lambda$ to be really high, we'll see that it incentivizes $W$ to be really small. When these weight values are really small, it reduces the effects of a lot of units in the hidden layers. Which makes the model behave more simply
 
+* Dropout Regularization (aka "Inverted Dropout")
+  * During training
+    * High level: Choose to randomly drop units in a hidden layer
+    * Specify a `keep_prob` which is the probability of keeping a unit. This is implemented by:
+      * Randomly "dropping" some of the output neurons in the activation of each layer. "Dropping" here means just setting them to 0
+      * Scaling the output of each activation by dividing it by `keep_prob`. This helps keep the expected value of the output the same
+    * The hidden units dropped changes for each training example
+  * During test time
+    * Don't do any dropping and use evaluation as you normally do. The scaling by `keep_prob` is supposed to take care of this
+  * Intuition:
+    * Removing nodes randomly leads to a simpler network
+    * If I'm a node in a neural network with dropout:
+      * One of my inputs could randomly disappear
+      * It makes sense to spread out my weights to other inputs since the one I normally rely on could disappear
+    * You can change `keep_prob` for each layer in a neural network
+* Other high variance fixes:
+  * Data augmentation techniques: Slightly modify your examples to add a little bit of variance. This gets you more data
+  * Early stopping: Plot your cost of both the training set and the dev-set over the number of iterations. Eventually, it'll hit a point where the they start to diverge, and you want to pick that!
+    * The downside here is it couples training the model with not overfitting. So it does make it more complicated to reason about.
 
 
