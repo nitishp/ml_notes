@@ -30,7 +30,7 @@ $$
 Where:
 
 $$
-||w||_{2} = \sum_{i = 1}^{n_x} w_{i}^2
+J(w, b) = \sum_{i = 1}^{n_x} w_i^2
 $$
 
 * Regularization with neural networks
