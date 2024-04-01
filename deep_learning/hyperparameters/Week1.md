@@ -22,28 +22,39 @@
 
 # Regularization
 * Regular regularization equation for logistic regression
+
 $$
 J(w, b) = \frac{1}{m} \sum_{i = 1}^{m}Loss(\hat{y}, y) + \frac{\lambda}{2m}||w||_{2}
 $$
+
 Where:
+
 $$
-||w||_{2} = \sum_{i=1}^{n_x}w_{i}^2
+||w||_{2} = \sum_{i = 1}^{n_x} w_{i}^2
 $$
+
 * Regularization with neural networks
+
 $$
 J(w, b) = \frac{1}{m} \sum_{i = 1}^{m}Loss(\hat{y}, y) + \frac{\lambda}{2m}\sum_{l = 1}^{L}||w^l||_{2}
 $$
+
 * Where the regularization term is the Frobenius matrix:
+
 $$
 ||w^l||_2 = \sum_{i=1}^{n_l}\sum_{j=1}^{n_{l-1}}w_{i,j}^2
 $$
+
 * On backprop:
+
 $$
 dW^l = (same\,as\,backprop) + \frac{\lambda}{m}W^l
 $$
+
 $$
 W^l = W^l - \alpha * dW^l
 $$
+
 $$
 W^l = W^l - \frac{\alpha\lambda}{m}W^l - (same\,as\,backprop)
 $$
@@ -84,9 +95,11 @@ Notice that this leads to the same equation as before but you're subtracting the
     * To implement this, you need to do a couple things:
       * Compress $W^1, b^1, W^2, b^2,...,W^n, b^n$ to $\theta^1, \theta^2, ..., \theta^n$
       * Calculate the approx for each $\theta_i$ as:
+
       $$
       d\theta_i = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ..., \theta_n) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ..., \theta_n)}{2\epsilon}
       $$
+
       * For each $\theta_i$ compare the derivate to your derivative approx, and see if they're similar enough. If not, there's a bug in the derivative calculation
     * Gradient checking doesn't work with dropout
     
