@@ -72,5 +72,22 @@ Notice that this leads to the same equation as before but you're subtracting the
   * Data augmentation techniques: Slightly modify your examples to add a little bit of variance. This gets you more data
   * Early stopping: Plot your cost of both the training set and the dev-set over the number of iterations. Eventually, it'll hit a point where the they start to diverge, and you want to pick that!
     * The downside here is it couples training the model with not overfitting. So it does make it more complicated to reason about.
-
+* Seeting up optimization problem
+  * Normalize your inputs: Make them all operate on the same range (-1 to 1). This speeds up training since it makes the cost function graph more symmetric. Which results in being able to pick a higher learning rate $\alpha$
+  * Vanishing / Exploding Gradients:
+    * If you have very deep neural networks, if:
+      * $W$ > 1, the activation value will get really large exponentially with the number of layers $L$, which will result in large derivatives
+      * $W$ < 1, the activation values will get really small exponentially with the number of layers $L$, which will result in really small derivatives, taking forever to converge
+    * Initializing weights is key and keeping them within a certain range will help this speed up faster. In practice you can do this by multiplying by `np.sqrt(1 / n_l-1)`
+  * Gradient checking
+    * Useful for when you implement a ML algorithm and you want to check that the backprop is correct
+    * To implement this, you need to do a couple things:
+      * Compress $W^1, b^1, W^2, b^2,...,W^n, b^n$ to $\theta^1, \theta^2, ..., \theta^n$
+      * Calculate the approx for each $\theta_i$ as:
+      $$
+      d\theta_i = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ..., \theta_n) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ..., \theta_n)}{2\epsilon}
+      $$
+      * For each $\theta_i$ compare the derivate to your derivative approx, and see if they're similar enough. If not, there's a bug in the derivative calculation
+    * Gradient checking doesn't work with dropout
+    
 
