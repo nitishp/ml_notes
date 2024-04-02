@@ -67,9 +67,11 @@ Notice that this leads to the same equation as before but you're subtracting the
 * Dropout Regularization (aka "Inverted Dropout")
   * During training
     * High level: Choose to randomly drop units in a hidden layer
-    * Specify a `keep_prob` which is the probability of keeping a unit. This is implemented by:
+    * Specify a `keep_prob` which is the probability of keeping a unit. In forward prob:
       * Randomly "dropping" some of the output neurons in the activation of each layer. "Dropping" here means just setting them to 0
       * Scaling the output of each activation by dividing it by `keep_prob`. This helps keep the expected value of the output the same
+    * In back prop:
+      * Multiply $da^{[l]}$ by `keep_prob` and scale it by diving by `keep_prob`
     * The hidden units dropped changes for each training example
   * During test time
     * Don't do any dropping and use evaluation as you normally do. The scaling by `keep_prob` is supposed to take care of this
@@ -102,5 +104,25 @@ Notice that this leads to the same equation as before but you're subtracting the
 
       * For each $\theta_i$ compare the derivate to your derivative approx, and see if they're similar enough. If not, there's a bug in the derivative calculation
     * Gradient checking doesn't work with dropout
-    
 
+## Initialization
+* Initializing all weights to 0
+  * It turns out the model never converges or diverges! The values stay the same
+  * This is because the loss function doesn't tell you which way to adjust the weights!
+
+Your loss function:
+$$ \mathcal{L}(a, y) =  - y  \ln(y_{pred}) - (1-y)  \ln(1-y_{pred})$$
+
+For `y=1`, `y_pred=0.5` it becomes:
+
+$$ \mathcal{L}(0, 1) =  - (1)  \ln(\frac{1}{2}) = 0.6931471805599453$$
+
+For `y=0`, `y_pred=0.5` it becomes:
+
+$$ \mathcal{L}(0, 0) =  - (1)  \ln(\frac{1}{2}) = 0.6931471805599453$$
+
+* Initializing to large values
+  * Leads to the initial cost being very high. If we look at the loss function above, this is because having a totally incorrect prediction leads to an infinitely high cost
+  * This can lead to an exploding gradient problem! Which can slow down the optimization process
+* He initialization
+  * Scale values by `sqrt(2./layers_dims[l-1])`
