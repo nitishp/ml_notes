@@ -94,6 +94,7 @@ Notice that this leads to the same equation as before but you're subtracting the
     * Initializing weights is key and keeping them within a certain range will help this speed up faster. In practice you can do this by multiplying by `np.sqrt(1 / n_l-1)`
   * Gradient checking
     * Useful for when you implement a ML algorithm and you want to check that the backprop is correct
+    * You don't want to run it when training, only when debugging. It really slows the prorgram down
     * To implement this, you need to do a couple things:
       * Compress $W^1, b^1, W^2, b^2,...,W^n, b^n$ to $\theta^1, \theta^2, ..., \theta^n$
       * Calculate the approx for each $\theta_i$ as:
@@ -102,8 +103,12 @@ Notice that this leads to the same equation as before but you're subtracting the
       d\theta_i = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ..., \theta_n) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ..., \theta_n)}{2\epsilon}
       $$
 
-      * For each $\theta_i$ compare the derivate to your derivative approx, and see if they're similar enough. If not, there's a bug in the derivative calculation
-    * Gradient checking doesn't work with dropout
+      * For each $\theta_i$ compare the derivate to your derivative approx, and see if they're similar enough. If not, there's a bug in the derivative calculation. You can use the following formula:
+      $$
+      difference = \frac{||grad - gradapprox||_2}{||grad||_2 + ||gradapprox||_2}
+      $$
+        * The expected difference should be less than $10^{-7}$
+    * Gradient checking doesn't work with dropout (since you need to know which $\theta_i$ to drop)
 
 ## Initialization
 * Initializing all weights to 0
