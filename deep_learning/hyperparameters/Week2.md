@@ -44,9 +44,18 @@
     v_2^{corrected} = \frac{V_t}{1 - \beta^t}
     $$
 * Gradient descent with momentum
+  * Used to help mini-batch gradient descent converge faster
   * Compute exponentially weighted average of your gradients, and use the gradient to update weights instead
   * Works for both batch gradient descent and mini-batch gradient descent
     * It helps smooth out oscillations when traversing to the minimum
+  * In practice for each iteration of gradient descent, it looks like this:
+  ```
+  v_dw = beta_1 * v_dw + (1 - beta_1) * dW
+  v_db = beta_1 * v_db + (1 - beta_1) * dB
+
+  W = W - alpha * v_dw
+  b = b - alpha * v_db
+  ```
 * RMSProp
   * Similar to gradient descent with momentum
   * For each iteration of gradient descent:
@@ -55,16 +64,16 @@
   s_dw = beta * s_dw + (1 - beta) dW ^ 2
   s_db = beta * s_db + (1 - beta) db ^ 2
 
-  W = W - alpha * (dW / sqrt(s_dw)
+  W = W - alpha * (dW / sqrt(s_dw))
   b = b - alpha * (db / sqrt(s_db))
   ```
 * Adam optimization algorithm
-  * Combines both RMSProp and gradient descent with momentum
+  * Combines both RMSProp and gradient descent with momentum. In practice works better than both
   * For each iteration of gradient descent / mini-batch gradient descent:
   ```
   Compute dW, db on current mini-batch
-  v_dw = beta_1 * v_dw + (1 - beta_1) * v_dw
-  v_db = beta_1 * v_db + (1 - beta_1) * v_db
+  v_dw = beta_1 * v_dw + (1 - beta_1) * dW
+  v_db = beta_1 * v_db + (1 - beta_1) * dB
   s_dw = beta_2 * s_dw + (1 - beta_2) * dW ^ 2
   s_db = beta_2 * s_db + (1 - beta_2) * db ^ 2
 
@@ -80,10 +89,13 @@
 * Learning rate decay
   * During initial steps of learning you take bigger steps of gradient descent. As iterations continue, you take smaller steps.
     * i.e. $\alpha$ goes down over the number of iterations
-    * Concrete formula:
+    * Exponential learning rate decay:
     $$
     \alpha = \frac{1}{1 + decayRate \cdot epochNumber} \alpha_0
     $$
+      * This has the problem of the learning rate decaying too quickly! So it will go to 0 too fast and the algorithm will stop learning
+    * To counter this, you can lower the learning rate after every $x$ number of iterations
+    
 * Local optima problems
   * There's no real global minimum in very high dimensional spaces. But there can be a lot of saddle points
   * This has the issue where your gradients become really small (they're in a "flat region") before switching to a place where they lower
