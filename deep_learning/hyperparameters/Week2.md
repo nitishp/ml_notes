@@ -41,7 +41,7 @@
       * For computing $V_0$ there is no $V_{-1}$ so the value becomes really small, just $(1 - \beta)\theta_t$
     * To account for this, use the following formula:
     $$
-    \frac{V_t}{1 - \beta^t}
+    v_2^{corrected} = \frac{V_t}{1 - \beta^t}
     $$
 * Gradient descent with momentum
   * Compute exponentially weighted average of your gradients, and use the gradient to update weights instead
