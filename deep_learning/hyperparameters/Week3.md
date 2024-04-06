@@ -18,6 +18,10 @@
 * High level idea:
   * We normalize inputs to make gradient descent faster
   * We can do the same thing for the activations of the output of each hidden layer
+    * More formally, this reduces the covariate shift effect for each neural net layer:
+      * This happens when the underlying dataset shifts slightly, causing the output of the layer to be incorrect
+      * Batch normalization forces the mean and variance of the layer to be 0 and 1, so it coerces these values to be in a similar range
+    * It also has the slight effect of regularization when used with mini-batch gradient descent, since the mean and variance are calculated per mini-batch. So they'll never be fully accurate, thus adding some noise
 * In practice, the normalization is not done at $a^{[l](i)}$ but at $z^{[l](i)}$
 * The way this works is:
   * For a bunch of activations: $z^{[l](1)},z^{[l](2)},...,z^{[l](m)}$
@@ -51,7 +55,67 @@ for t=1,...,num_mini_batches
     * dgamma = dgamma - alpha * dgamma
     * dbeta = dbeta - alpha * dbeta
 ```
+* During test time, you'll want to use the same formulas, but you need to use $\mu$ and $\sigma^2$ over the entire training set:
+  * You can do this using exponentially weighted averages for each mini batch
 
 ## Multi-class Classification
 
+* Called: Softmax regression
+  * $C$ = number of classes
+* The final layer of the neural network is the softmax layer
+  * It has $C$ number of neurons
+* To compute the final output of the softmax layer, the activation is a little different:
+  * Compute $z^{[l]}$ as normal
+  * Compute:
+  $$
+  t = e^{z^{[l]}}
+  $$
+  $$
+  a^{[l]} = \frac{t}{\sum_{i=1}^{C}t_i}
+  $$
+  * Pick the highest value
+* Cost function:
+$$
+Loss(\hat{y}, y) = -\sum_{j=1}^{C}y_jlog(\hat{y}_j)
+$$
+$$
+J = \frac{1}{m} \sum_{i=1}^{m}Loss(\hat{y}^{(i)}, y^{(i)})
+$$
+* Computing back prop is the same the only difference is this equation:
+$$
+dz^{[L]} = \hat{y} - y
+$$
+
+
 ## Programming Frameworks
+* Tensorflow Notes
+```
+w = tf.Variable(0, dtype=tf.float32)
+optimizer = tf.keras.optimizers.Adam(0.1) #0.1 = learning rate
+
+def train_step():
+  with tf.GradientTape() as tape:
+    cost = w ** 2 - 10 * w + 25
+  trainable_variables = [w]
+  grads = tape.gradient(cost, trainable_variables)
+  optimizer.apply_gradients(zip(grads, trainable_variables))
+
+for i in range(1000):
+  train_step()
+```
+
+```
+w = tf.Variable(0, dtype=tf.float32)
+x = np.array([1.0, -10.0, 25.0])
+optimizer = tf.keras.optimizers.Adam(0.1) #0.1 = learning rate
+
+def training(x, w, optimizer):
+  def cost_fn():
+    return x[0] * w ** 2 + x[1] * w + x[2]
+  for i in range(1000):
+    optimizer.minimize(cost_fn, [w])
+  
+  return w
+
+w = training(x, w, optimizer)
+```
