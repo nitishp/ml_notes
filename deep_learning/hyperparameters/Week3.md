@@ -119,3 +119,26 @@ def training(x, w, optimizer):
 
 w = training(x, w, optimizer)
 ```
+
+* TensorFlow datasets are stored as TensorFlow datasets
+  * These only provide access to iterators (no direct access to elements)
+  * `tf.data.Dataset.from_tensor_slices(<np_array>)`
+  * Call `.map` to transform the TensorFlow dataset
+* With tensorflow, all you need to do is:
+  * Define the forward prop
+  * Define the cost function
+  * Gradients and backprop is taken care of for you
+
+General workflow:
+```
+# Initialize params
+# Pick optimizer
+for epoch in range(num_epochs):
+  with tf.GradientTape() as tape:
+    # Do forward prop
+    # Compute loss
+  
+  trainable_variables = [W1, b1, W2, b2, ..., Wn, bn]
+  grads = tape.gradient(loss, trainable_variables)
+  optimizer.apply_gradients(zip(grads, trainable_variables))
+```
