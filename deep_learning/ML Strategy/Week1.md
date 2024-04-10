@@ -22,3 +22,17 @@
   * If the evaluation metric in the real world changes
   * If the distribution of data changes
   * When doing this, separate out defining the evaluation metric vs actually doing well on the metrics
+
+## Comparing to human-level performance
+* Bayes error: The lowest possible error that an ML algorithm can achieve
+  * This is better than human level performance
+* Comparing to human level performance is good because:
+  * Humans can help you label (x, y) dataset
+  * Can do manual error analysis: Why did a human get this right? 
+  * Tells you to focus on bias or variance
+    * Human level performance can often be a proxy for bayes error
+    * If the training set error rate is vastly different from the human level error rate ("Avoidable bias"), you know there's a lot of bias in the algorithm
+    * If the dev set error rate is higher than the training set error rate, it could be due to variance
+* Remember that your model's error cannot be lower than Bayes error, if it is then, either:
+  * The model is overfitting to the training data
+  * The bayes error is actually lower than you think
