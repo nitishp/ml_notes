@@ -116,7 +116,8 @@ Notice that this leads to the same equation as before but you're subtracting the
   * This is because the loss function doesn't tell you which way to adjust the weights!
 
 Your loss function:
-$$ \mathcal{L}(a, y) =  - y  \ln(y_{pred}) - (1-y)  \ln(1-y_{pred})$$
+
+$$ \mathcal{L}(a, y) =  - y  \ln(y_{pred}) - (1-y)  \ln(1-y_{pred}) $$
 
 For `y=1`, `y_pred=0.5` it becomes:
 
