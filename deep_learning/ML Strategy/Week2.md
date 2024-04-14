@@ -54,3 +54,8 @@
     * You have similar amounts of labeled data for each of the output. It's okay if there's some missing (just don't use those for the loss function)
 
 ## End-to-end Deep Learning
+* In traditional machine learning applications, you often need to use subcomponents before feeding information into a ML model:
+  * As an example, you need a model to recognize where a face is first, then pass it into a different model to figure out who the person is
+  * In end-to-end deep learning, you skip these intermediate steps
+    * This works a lot better when you have a lot more data
+* 
