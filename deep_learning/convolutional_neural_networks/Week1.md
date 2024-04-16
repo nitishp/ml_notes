@@ -35,5 +35,29 @@
 * Single layer of a convolutional neural network
   * You can think of the filter in the convolution operator as part of $W^{[l]}$. More concretely, look at this example:
     ![Convolution Neural Nets](./convolution_neural_nets.png)
+    * Number of parameters is $f^{[l]} \cdot f^{[l]} \cdot n_c^{[l - 1]}$
+    * Note that you apply activation functions to the result of the convolution! 
   * Notation
   ![Convolution Notation](./convolution_notation.png)
+    * In this image if $l = 1$, then $n_c^{[l - 1]}$ is equal to the number of channels in the image
+  * We will use backpropogation to learn $W^{[l]}$ (the values of the filter)
+* Multiple layers of convolutional neural network
+  * Called ConvNet for short
+  * Apply multiple layers of these type of convolutions
+    * Gradually the height and width of these go down as more layers are applied and the $n_c^{[l]}$ of each layer increases
+    * "Unroll" the final layer and feed it into a logistic regression unit
+* Pooling
+  * Also splits up the image into $(f, f)$ chunks, but instead of doing convolution, it can either take the max value of this region (max pooling), or the average (average pooling)
+  * It uses the same formula for determining the size of the output
+  $$
+    (\lfloor \frac{n + 2p - f}{s} + 1 \rfloor, \lfloor \frac{n + 2p - f}{s} + 1 \rfloor, n_{c'})
+  $$
+  * Keep the same number of layers in the third dimension
+  * There is no backpropogation in pooling! There's no weights to learn
+* Fully Connected Layers
+  * This is what we've seen before. Every neuron is connected to every other neuron
+* Why Convolutions
+  * It lowers the number of parameters needed to learn as compared to a fully connected layer between two matrices
+  * It takes advantage of two things:
+    * Parameter sharing: The weights learned for the filter (like for a vertical edge detector) are useful in any part of the image, either the top left or the bottom right
+    * Sparsity of connections: When using convolutions, we only look at certain regions of the input when computing the value for a pixel
