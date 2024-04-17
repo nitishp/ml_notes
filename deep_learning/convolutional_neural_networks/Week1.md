@@ -15,6 +15,7 @@
   * If you have a n x n image, and an f x f filter, the result is a (n - f + 1, n - f + 1) image
   * To counteract this you can pad the input image all around to make sure it retains the same original size. This is called a "Same" convolution. 
   * If you do no padding, this is a "valid" convolution
+  * You never add padding to the 3rd layer
 * Strided convolutions
   * Instead of hopping over the input matrix one pixel at a time, you can take a stride of $s$ steps
   * This makes the final output matrix:
@@ -36,7 +37,8 @@
   * You can think of the filter in the convolution operator as part of $W^{[l]}$. More concretely, look at this example:
     ![Convolution Neural Nets](./convolution_neural_nets.png)
     * Number of parameters is $f^{[l]} \cdot f^{[l]} \cdot n_c^{[l - 1]}$
-    * Note that you apply activation functions to the result of the convolution! 
+    * Note that you apply activation functions to the result of the convolution!
+    * Multiple convolution filters apply add a new matrix in the 3rd dimension 
   * Notation
   ![Convolution Notation](./convolution_notation.png)
     * In this image if $l = 1$, then $n_c^{[l - 1]}$ is equal to the number of channels in the image
