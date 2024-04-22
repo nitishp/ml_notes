@@ -23,12 +23,12 @@
   (\lfloor \frac{n + 2p - f}{s} + 1 \rfloor, \lfloor \frac{n + 2p - f}{s} + 1 \rfloor)
   $$
 * Convolutions over multiple dimensions
-  * Normal images are (n, n, 3). You can convolve this with a (f, f, 3) matrix. The 3's at the end have to be the same:
-    * This gives a 2D matrix with the following dimensions:
+  * Normal images are (n, n, 3). You convolve this with a (f, f, 3) matrix. The 3's at the end have to be the same:
+    * This gives a 2D matrix (called the feature map) with the following dimensions:
     $$
     (\lfloor \frac{n + 2p - f}{s} + 1 \rfloor, \lfloor \frac{n + 2p - f}{s} + 1 \rfloor)
     $$
-    * If you apply multiple convolutions, you can add them in different layers. So if applying multiple convolutions, you'll have an output matrix of the size:
+    * If you apply multiple convolutions, you put them in different layers. So if applying multiple convolutions, you'll have an output matrix of the size:
     $$
     (\lfloor \frac{n + 2p - f}{s} + 1 \rfloor, \lfloor \frac{n + 2p - f}{s} + 1 \rfloor, n_{c'})
     $$
@@ -55,11 +55,83 @@
     (\lfloor \frac{n + 2p - f}{s} + 1 \rfloor, \lfloor \frac{n + 2p - f}{s} + 1 \rfloor, n_{c'})
   $$
   * Keep the same number of layers in the third dimension
-  * There is no backpropogation in pooling! There's no weights to learn
+  * There is still backpropogation in pooling! But there's no parameters here so there's nothing to update
+  * Why pooling
+    * It helps reduce computation in the input since we shrink the input
 * Fully Connected Layers
   * This is what we've seen before. Every neuron is connected to every other neuron
 * Why Convolutions
   * It lowers the number of parameters needed to learn as compared to a fully connected layer between two matrices
   * It takes advantage of two things:
     * Parameter sharing: The weights learned for the filter (like for a vertical edge detector) are useful in any part of the image, either the top left or the bottom right
-    * Sparsity of connections: When using convolutions, we only look at certain regions of the input when computing the value for a pixel
+    * Sparsity of connections: When using convolutions, we only look at certain regions of the input when computing the value for a pixel. This is less information than a fully connected network
+
+
+### Tensorflow Notes
+* Sequential API
+  * You can use `tf.keras.Sequential` to apply these types of layers sequentially to your neural network when building these models
+  * They work similarly to Python Lists! 
+  * Example:
+  ```
+  def happyModel():
+    """
+    Implements the forward propagation for the binary classification model:
+    ZEROPAD2D -> CONV2D -> BATCHNORM -> RELU -> MAXPOOL -> FLATTEN -> DENSE
+    
+    Note that for simplicity and grading purposes, you'll hard-code all the values
+    such as the stride and kernel (filter) sizes. 
+    Normally, functions should take these values as function parameters.
+    
+    Arguments:
+    None
+
+    Returns:
+    model -- TF Keras model (object containing the information for the entire training process) 
+    """
+    model = tf.keras.Sequential([            
+            # YOUR CODE STARTS HERE
+            tfl.ZeroPadding2D(padding=3, input_shape=(64,64,3)),
+            tfl.Conv2D(32, 7),
+            tfl.BatchNormalization(axis=3),
+            tfl.ReLU(),
+            tfl.MaxPool2D(),
+            tfl.Flatten(),
+            tfl.Dense(1, activation='sigmoid')
+            # YOUR CODE ENDS HERE
+        ])
+    
+    return model
+  ```
+* There's also the Functional API that lets you create a graph of layers.
+  * The main benefit is it allows you to skip layers but I'm not sure when you would want to do this
+  * They are both functionally equivalent
+  * Example:
+  ```
+  def convolutional_model(input_shape):
+    """
+    Implements the forward propagation for the model:
+    CONV2D -> RELU -> MAXPOOL -> CONV2D -> RELU -> MAXPOOL -> FLATTEN -> DENSE
+    
+    Note that for simplicity and grading purposes, you'll hard-code some values
+    such as the stride and kernel (filter) sizes. 
+    Normally, functions should take these values as function parameters.
+    
+    Arguments:
+    input_img -- input dataset, of shape (input_shape)
+
+    Returns:
+    model -- TF Keras model (object containing the information for the entire training process) 
+    """
+    Z1 = tfl.Conv2D(8, 4, 1, padding="same")(input_img)
+    A1 = tfl.ReLU()(Z1)
+    P1 = tfl.MaxPool2D(pool_size=(8,8), strides=(8,8), padding="same")(A1)
+    Z2 = tfl.Conv2D(16, 2, 1, padding="same")(P1)
+    A2 = tfl.ReLU()(Z2)
+    P2 = tfl.MaxPool2D(pool_size=(4,4), strides=(4,4), padding="same")(A2)
+    F = tfl.Flatten()(P2)
+    outputs = tfl.Dense(6, activation='softmax')(F)
+    
+    # YOUR CODE ENDS HERE
+    model = tf.keras.Model(inputs=input_img, outputs=outputs)
+    return model
+  ```
