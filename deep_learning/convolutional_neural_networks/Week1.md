@@ -56,8 +56,10 @@
   $$
   * Keep the same number of layers in the third dimension
   * There is still backpropogation in pooling! But there's no parameters here so there's nothing to update
+    * During back-prop: The values are only passed back for things that affect the Loss function. So in max pooling, weights would passed back for one element of the set used to find the max
   * Why pooling
     * It helps reduce computation in the input since we shrink the input
+
 * Fully Connected Layers
   * This is what we've seen before. Every neuron is connected to every other neuron
 * Why Convolutions
