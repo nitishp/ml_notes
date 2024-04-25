@@ -67,3 +67,13 @@
       * Depthwise convoluion - same as above
       * Projection convolution - same as Pointwise convolution
     * The main benefit of the expansion convolution is to be able to learn a more complicated function before having it shrink down again
+
+* Transfer learning
+  * A good approach for a lot of computer vision tasks since a lot of these networks have been trained for weeks!
+  * Depending on your dataset size, you can download someone else's network and weights and "freeze" the parameters. Then change the last softmax layer to output the classes that you care about
+    * If you have more data, you can choose to freeze only certain layers
+    * Lots of deep learning frameworks have the ability to freeze layers
+* Data augmentation
+  * A lot of computer vision tasks almost always never have enough data. It's common to use techniques like cropping, rotating, reflecting etc to get more data
+  * This can lead to potential shifts in the data distribution between training / dev / test sets
+    * Use train-dev sets to figure out if you're overfitting the model itself, or if you're data is too mismatched!
