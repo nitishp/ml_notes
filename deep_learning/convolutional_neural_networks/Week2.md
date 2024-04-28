@@ -46,7 +46,7 @@
   $$
   * Performance of very deep plain neural networks tends to get worse on the training set as you add more layers. There gets to be too many parameters to train
   * Since $z^{[l + 2]}$ is just a product of $W^{[l + 1]}$, this allows the ResNet network to learn the identity function by setting $W^{[l + 1]}$ equal to 0. So it's easier to skip these additional layers if they're useless
-  * A lot of times in ResNets, the number of dimensions is the same between layers, but if it's not, you can multiply $a^{[l]}$ by some matrix to get the dimensions to match
+  * A lot of times in ResNets, the number of dimensions is the same between layers, but if it's not, you can multiply $a^{[l]}$ by some matrix to get the dimensions to match. This is implemented in the "skip connections" path
 * Inception Network
   * 1x1 convolution network
     * Used to shrink the number of channels ($n_c$) in the output
@@ -67,12 +67,14 @@
       * Depthwise convoluion - same as above
       * Projection convolution - same as Pointwise convolution
     * The main benefit of the expansion convolution is to be able to learn a more complicated function before having it shrink down again
+    * It uses a final GlobalAveragePooling2D to reduce the output size
 
 * Transfer learning
   * A good approach for a lot of computer vision tasks since a lot of these networks have been trained for weeks!
   * Depending on your dataset size, you can download someone else's network and weights and "freeze" the parameters. Then change the last softmax layer to output the classes that you care about
     * If you have more data, you can choose to freeze only certain layers
     * Lots of deep learning frameworks have the ability to freeze layers
+  * When using a pre-trained model, it's best practice to use the same normalizations if the model did that too
 * Data augmentation
   * A lot of computer vision tasks almost always never have enough data. It's common to use techniques like cropping, rotating, reflecting etc to get more data
   * This can lead to potential shifts in the data distribution between training / dev / test sets
