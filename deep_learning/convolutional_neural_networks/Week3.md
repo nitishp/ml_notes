@@ -44,6 +44,7 @@
         * So predicting $y$ is something like $[p_c, b_x, b_y, b_w, b_h, c_1, ..., c_n, p_c, b_x, b_y, b_w, b_h, c_1, ..., c_n]$
         * It can help solve the case of multiple objects having their same midpoint in the same cell
         * It also helps the algorithm specialize better
+    * It's common to use transfer learning with these types of large models since they take a long time to train
   * Semantic segmentation
     * Instead of just drawing a bounding box around an interesting area, label every single pixel in the output. 
     * To do this, you use a U-Net architecture. 
