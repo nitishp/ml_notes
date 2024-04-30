@@ -55,4 +55,4 @@
         * You have a bunch of normal CONV layers. These shrink the height and width but increase the channels
         * These are then passed to transpose convolution layers which blow it back up to the original image size
         * There's also skip connections between the CONV layers and the expansion layers to fill in more granular information
-        * Final output is a matrix of $(h, w, n_c)$, where $n_c$ is the number of output classes
+        * Final output is a matrix of $(h, w, n_c)$, where $n_c$ is the number of output classes. This final image is created with a 1x1 convolution
