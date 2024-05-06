@@ -36,3 +36,25 @@
       $$
       \hat{y} = \sigma(\sum_{i=1}^{k}w_k *|d(x^{(i)}, x^{(j)})| + b)
       $$
+## Neural Style Transfer
+* Given a content image (C), a style function (S), generate a generated image (G)
+* Early layers of a CONV net detect simple features like an edge detector. Later layers automatically learn more complex features like a dog detector.
+  * You can measure this by trying to see what images and inputs activate one particular hidden unit
+* Training a neural style transfer algorithm
+  * $J(G) = \alpha J_{content}(C, G) + \beta J_{style}(S, G)$
+    * For $J_{content}(C, G)$
+      * Pick a random layer $l$
+      * Get the activations of layer $l$ for both $C$ and $G$. Compute something like:
+        * $J_{content}(C, G) = \frac{1}{2}||a^{[l](C)}  - a^{[l][G]}|| ^ 2$
+
+    * For $J_{style}(C, G)$
+      * Across multiple layers $l$:
+        * $J_{style}(C, G) = \sum_{l} \lambda^{[l]}J_{style}^{[l]} (S, G)$
+      * $J_{style}^{[l]} (S, G) = \sum_{k} \sum_{k'} || G^{[l](S)} - G^{[l](G)}||_F$
+        * $F$ indicates Forbenius norm
+      * $G^{[l]}$ is the style matrix of size $(n_c^{[l]}, n_c^{[l]})$:
+        * $G^{[l]}_{k, k'} = \sum_i \sum_j a^{[l]}_{i,j,k} a^{[l]}_{i,j,k'}$
+
+  * Run gradient descent on a Generated output:
+    * It starts off with a bunch of random pixel values
+    * Each time the pixel values are updated with gradient of $J(G)$
