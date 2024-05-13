@@ -41,3 +41,10 @@
   * RNNs suffer from this problem since it's a very deep neural network
   * So the gradients of the prediction don't affect earlier layers of the RNN as easily
   * Exploding gradients can also happen for a similar reason
+* GRU (Gated Recurrent Unit)
+  * High level intuition: 
+    * This helps solve the vanishing gradient problem.
+    * It allows neural networks to pass the activation $a^{<t>}$ to deeper hidden layers more easily through using gates
+  * Normal RNN unit vs GRU RNN unit:
+    ![Normal vs GRU](./gru_rnn.png)
+  
