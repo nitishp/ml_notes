@@ -85,7 +85,7 @@ Notice that this leads to the same equation as before but you're subtracting the
   * Data augmentation techniques: Slightly modify your examples to add a little bit of variance. This gets you more data
   * Early stopping: Plot your cost of both the training set and the dev-set over the number of iterations. Eventually, it'll hit a point where the they start to diverge, and you want to pick that!
     * The downside here is it couples training the model with not overfitting. So it does make it more complicated to reason about.
-* Seeting up optimization problem
+* Setting up optimization problem
   * Normalize your inputs: Make them all operate on the same range (-1 to 1). This speeds up training since it makes the cost function graph more symmetric. Which results in being able to pick a higher learning rate $\alpha$
   * Vanishing / Exploding Gradients:
     * If you have very deep neural networks, if:
