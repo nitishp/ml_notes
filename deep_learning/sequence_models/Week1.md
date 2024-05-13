@@ -47,4 +47,14 @@
     * It allows neural networks to pass the activation $a^{<t>}$ to deeper hidden layers more easily through using gates
   * Normal RNN unit vs GRU RNN unit:
     ![Normal vs GRU](./gru_rnn.png)
-  
+* LSTM (Long Short Term Memory)
+  * An alternative to GRUs
+  * Conceptually quite similar to GRU, but notice that $a^{<t>} \neq c^{<t>}$
+  * ![LSTM](./lstm.png)
+  * $\Gamma_u, \Gamma_f, \Gamma_o$ represent the update, forget and output gate respectively
+* BRNN (Bidirectional RNN)
+  * Similar to the normal RNN, but for each forward pass RNN unit, there's also a backward pass RNN
+    * So instead of just starting at $x^{<1>}$ and going forward, there's a $x^{<T_x>}$ going backward
+    * The outputs of these two activations are used to predict the final $\hat{y}^{<t>}$
+* Deep RNNs
+  * Similar to the normal RNN, but instead of using just one layer of activations to compute $y^{<t>}$ we use the output from multiple layers stacked on top of one another
