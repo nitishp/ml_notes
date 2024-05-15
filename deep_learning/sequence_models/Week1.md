@@ -14,6 +14,7 @@
   * Similar to ConvNets, learned parameters cannot be shared easily across different positions
 * RNN Model
   ![RNN Model](./rnn_model.png)
+* The weights $W_{ax}, W_{aa}, W_{ya}$ are the same for every time step
 * Loss functions
   * $L^{<t>}(\hat{y}^{<t>}, y^{<t>}) = $ binary cross entropy
   * $L(\hat{y}, y) = \sum_t L^{<t>}(\hat{y}^{<t>}, y^{<t>})$
