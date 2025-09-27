@@ -22,5 +22,6 @@
 * Problem:
   * Current encoder / decoder model passes all encoder info directly into decoder with just one hidden state
   * Instead you can kind of stack the two RNNs on top of each other like so:
-  ![Attention model](image.png)
+  ![Attention model](./attenion_model.png)
+     * TODO Make this image better
   * This will let the model learn which specific parts of the input needs to be paid attention to for each predicted word
