@@ -50,3 +50,16 @@
     * One approach is to use an LLM as a judge. I.e. ask the LLM which image is better
       * This has their own problems. LLMs are not reliable and have internal biases
     * You can get more consistent results by giving the LLM a rubric on how to grade the response
+
+## Tool Use
+* Tools are functions that LLMs can call to get more accurate / up to date information
+  * LLMs choose when to call tools as they deem appropriate
+* How LLMs used to request tools to be called:
+  * You would write a prompt telling the LLM what "tools" / functions they had access to with some signifier like "FUNCTION" to indicate they wanted the tool called
+  * The LLM would then output "FUNCTION: get_current_time()" if it wanted the tool called
+  * You would then call the function programmatically by parsing the output of the LLM
+  * Then with the result and conversation history, you'd feed the info back to the LLM
+* How LLMs request tools to be called now:
+  * It sort of works the same way, but now there's some better APIs so you don't need to manually parse the LLM output, and call it again
+  * You essentially use an API that gives it a detailed JSON of what the tool / function does
+    * An important distinction is that the API will let the LLM to call the function for you
