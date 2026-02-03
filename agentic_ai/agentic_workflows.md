@@ -29,3 +29,24 @@
   * Multi-agent workflow: Sub agents that combine together to take care of the overall complex task
 
 
+## Reflection Design Pattern
+
+* Reflection is a step after the initial generation of the output to ask it to improve it's own output
+  * It's much more powerful with external feedback. E.g. for a coding agent, if you had "external feedback" that gave feedback about whether or not it even compiles
+* Zero shot prompting is where you give a prompt with no specific examples in the prompt
+  * Similarly one shot prompting is if you give one example in the prompt. Few shot is if you give a few examples in the prompt
+* Reflection pattern has been proven through research papers to improve the performance on various tasks
+* Tips for writing reflection prompts
+  * Clearly indicate the reflection action what things to look for
+  * Tell it what specific things to look for (e.g. look at the image generated, critique it and update the chart)
+  * Bonus is if you can give it an external tool in order to improve it's outputs (e.g. run the code and evaluate it's correctness)
+    * At Meta, we're calling this "Graders". Because this information is fed back into the LLM
+  * Using a different LLM for reflection might make sense to offset any biases
+* How to evaluate the impact of reflection? 
+  * This is where evals come in
+  * For objective answers:
+    * Collect ground truth labels/answers. And then compare the different agentic workflows (with reflection and without) and see which model is more accurate
+  * For subjective answers:
+    * One approach is to use an LLM as a judge. I.e. ask the LLM which image is better
+      * This has their own problems. LLMs are not reliable and have internal biases
+    * You can get more consistent results by giving the LLM a rubric on how to grade the response
